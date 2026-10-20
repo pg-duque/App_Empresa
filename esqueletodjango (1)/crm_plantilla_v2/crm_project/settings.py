@@ -10,9 +10,9 @@ DEBUG = True                 # True = muestra errores detallados (solo desarroll
 ALLOWED_HOSTS = []           # Con DEBUG=False hay que listar dominios, ej: ['midominio.com']
 
 # >>> ALUMNO: nombre de tu CRM (aparece en la barra superior)
-NOMBRE_CRM = 'Mi CRM'
+NOMBRE_CRM = 'Modelmakers Club CRM'
 # >>> ALUMNO: color principal en formato CSS. Valores válidos: '#0b6623', 'crimson', 'rgb(10,20,30)'...
-COLOR_PRINCIPAL = '#2c3e50'
+COLOR_PRINCIPAL = "#502c2c"
 
 # >>> ALUMNO: MÓDULOS ACTIVOS. Cada nombre es una carpeta (app) del proyecto.
 #   - Para DESACTIVAR un módulo: bórralo o coméntalo de la lista (y borra su bloque en contactos/detalle.html).
