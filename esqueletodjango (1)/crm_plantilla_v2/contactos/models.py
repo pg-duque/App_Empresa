@@ -11,9 +11,13 @@ from django.db import models
 class Contacto(models.Model):
     # choices: lista de pares (valor_guardado_en_BD, texto_visible). Cámbialas por las de tu temática.
     TIPOS = [
-        ('cliente', 'Cliente'),
-        ('proveedor', 'Proveedor'),
-        ('otro', 'Otro'),
+        ('socio', 'Socio'),
+        ('jugador', 'Jugador Habitual'),
+        ('modelista','Pintor / Modelista'),
+        ('proveedor', 'Proveedor / Marca'),
+        ('cliente', 'Cliente casual'),
+        ('mesa', "Mesa de juego"),
+        ('otro','Otro')
         # TODO-ALUMNO 1: añade/renombra tipos (ej: 'socio', 'jugador', 'paciente', 'alumno'...)
     ]
 
@@ -23,6 +27,8 @@ class Contacto(models.Model):
     telefono = models.CharField(max_length=30, blank=True)           # Teléfono como texto (admite +34, espacios)
     notas = models.TextField(blank=True)                             # Texto largo
     creado = models.DateTimeField(auto_now_add=True)                 # auto_now_add -> fecha de creación automática
+    cuota_mesnual = models.BooleanField(default=False, verbose_name="Cuota mensual", help_text="Marca si el socio ha pagado la mensualidad de la asociación")  # Booleano con etiqueta y ayuda
+    sistema_preferido = models.CharField(max_length=100, blank=True, verbose_name="Sistema de juego preferido", help_text="P.ej. Warhammer 40k, Age of Sigmar, Star Wars X-Wing, etc.")  # Campo adicional para el sistema de juego preferido
     # TODO-ALUMNO 2: añade 2 campos propios de tu temática (ver catálogo abajo). Después:
     #   python manage.py makemigrations && python manage.py migrate
     #   y añádelos a forms.py (fields), admin.py (list_display) y lista.html (columnas).
