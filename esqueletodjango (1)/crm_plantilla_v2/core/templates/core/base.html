@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>{% block title %}{{ NOMBRE_CRM }}{% endblock %}</title>
+<style>
+ body{font-family:system-ui,sans-serif;margin:0;background:#f5f6f8}
+ nav{background:{{ COLOR }};padding:12px 20px;display:flex;gap:16px;align-items:center}
+ nav a,nav button{color:#fff;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer}
+ nav .marca{font-weight:bold;font-size:1.2em;margin-right:auto}
+ main{max-width:960px;margin:24px auto;background:#fff;padding:24px;border-radius:8px}
+ table{border-collapse:collapse;width:100%} td,th{border-bottom:1px solid #ddd;padding:8px;text-align:left}
+ input,select,textarea{padding:6px;margin:2px 0} main button,.btn{padding:6px 12px;cursor:pointer}
+ form p{margin:10px 0} .aviso{background:#fff8e1;border-left:4px solid #f5a623;padding:10px}
+</style></head>
+<body>
+<nav>
+ <a class="marca" href="{% url 'inicio' %}">{{ NOMBRE_CRM }}</a>
+ {% for m in modulos %}<a href="{% url m.url %}">{{ m.nombre }}</a>{% endfor %}
+ {% if user.is_staff %}<a href="/admin/">Admin</a>{% endif %}
+ {% if user.is_authenticated %}
+  <form method="post" action="{% url 'logout' %}" style="margin:0">{% csrf_token %}<button>Salir ({{ user.username }})</button></form>
+ {% endif %}
+</nav>
+<main>
+ {% for m in messages %}<p class="aviso">{{ m }}</p>{% endfor %}
+ {% block content %}{% endblock %}
+</main>
+</body></html>

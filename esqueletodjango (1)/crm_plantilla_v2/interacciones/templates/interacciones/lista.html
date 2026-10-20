@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>Interacciones</h1>
+{% comment %}
+  Plantilla del listado. Variables que envía la vista: objetos (lista) y q (texto buscado).
+  for o in objetos ... empty ... endfor : recorre la lista; 'empty' se muestra si no hay datos.
+  o.campo muestra un campo | o.get_campo_display texto visible de un choices
+  fecha|date:"d/m/Y" formatea fecha | texto|truncatechars:60 recorta | x|default:"—" valor por defecto
+  url 'app:nombre' o.pk  genera la URL (nunca escribas rutas a mano)
+  TODO-ALUMNO 6: añade/quita columnas (th en cabecera y td en cada fila) según tus campos.
+{% endcomment %}
+<form method="get">
+ <input name="q" value="{{ q }}" placeholder="Buscar...">
+ <button>Buscar</button>
+ <a class="btn" href="{% url 'interacciones:crear' %}">+ Nuevo</a>
+</form>
+<table>
+ <tr><th>Fecha</th><th>Contacto</th><th>Canal</th><th>Resumen</th><th>Acciones</th></tr>
+ {% for o in objetos %}
+ <tr><td>{{ o.fecha|date:"d/m/Y H:i" }}</td><td>{{ o.contacto }}</td><td>{{ o.get_canal_display }}</td><td>{{ o.resumen|truncatechars:60 }}</td>
+  <td><a href="{% url 'interacciones:detalle' o.pk %}">Ver</a> ·
+      <a href="{% url 'interacciones:editar' o.pk %}">Editar</a> ·
+      <a href="{% url 'interacciones:borrar' o.pk %}">Borrar</a></td></tr>
+ {% empty %}<tr><td colspan="5">No hay datos todavía.</td></tr>
+ {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>Panel de {{ NOMBRE_CRM }}</h1>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+{% for r in resumen %}
+ <a href="{% url r.url %}" style="flex:1;min-width:140px;background:#eef1f5;padding:16px;border-radius:8px;text-decoration:none;color:#222">
+  <div style="font-size:2em">{{ r.n }}</div>{{ r.etiqueta }}</a>
+{% endfor %}
+</div>
+{% if pendientes != None %}<p>Tareas pendientes: <strong>{{ pendientes }}</strong></p>{% endif %}
+{% if ganado != None %}<p>Importe de oportunidades ganadas: <strong>{{ ganado }} €</strong></p>{% endif %}
+{% if ultimas %}<h2>Últimas interacciones</h2>
+<ul>{% for i in ultimas %}<li>{{ i.fecha|date:"d/m/Y H:i" }} · {{ i.contacto }} · {{ i.get_canal_display }}</li>{% endfor %}</ul>{% endif %}
+{% endblock %}

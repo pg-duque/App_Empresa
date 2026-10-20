@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>{{ objeto }}</h1>
+<table>{% for etiqueta, valor in campos %}<tr><th>{{ etiqueta }}</th><td>{{ valor }}</td></tr>{% endfor %}</table>
+<p>
+ <a href="{% url ns|add:':editar' objeto.pk %}">Editar</a> ·
+ <a href="{% url ns|add:':borrar' objeto.pk %}">Borrar</a> ·
+ <a href="{% url ns|add:':index' %}">Volver al listado</a>
+</p>
+{% endblock %}
