@@ -1,0 +1,6 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>¿Borrar «{{ objeto }}»?</h1>
+<p>Esta acción no se puede deshacer.</p>
+<form method="post">{% csrf_token %}<button type="submit">Sí, borrar</button> <a href="{% url volver %}">Cancelar</a></form>
+{% endblock %}
