@@ -25,6 +25,7 @@ class Interaccion(models.Model):
         ('email', 'Email'),
         ('reunion', 'Reunión'),
         ('nota', 'Nota'),
+        ('whatsapp', 'WhatsApp')
         # TODO-ALUMNO 4: añade otro canal, por ejemplo ('whatsapp', 'WhatsApp').
     ]
 

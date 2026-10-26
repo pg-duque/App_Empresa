@@ -15,14 +15,14 @@ def inicio(request):
     # Tarjetas con el número de objetos de cada módulo activo
     resumen = []
     for app, modelo, etiqueta in [('contactos', 'Contacto', 'Contactos'),
-                                  ('oportunidades', 'Oportunidad', 'Oportunidades'),
-                                  ('interacciones', 'Interaccion', 'Interacciones'),
-                                  ('tareas', 'Tarea', 'Tareas')]:
+                                ('oportunidades', 'Oportunidad', 'Oportunidades'),
+                                ('interacciones', 'Interaccion', 'Interacciones'),
+                                ('tareas', 'Tarea', 'Tareas')]:
         M = _modelo(app, modelo)
         if M:
             resumen.append({'etiqueta': etiqueta, 'n': M.objects.count(), 'url': f'{app}:index'})
 
-    ultimas, pendientes, ganado = [], None, None
+    ultimas, pendientes, fidelizado = [], None, None
     Inter = _modelo('interacciones', 'Interaccion')
     if Inter:
         ultimas = Inter.objects.select_related('contacto')[:5]      # Últimas 5 (el modelo ya ordena por -fecha)
@@ -31,8 +31,8 @@ def inicio(request):
         pendientes = Tarea.objects.filter(hecha=False).count()      # filter(campo=valor) = WHERE
     Op = _modelo('oportunidades', 'Oportunidad')
     if Op:
-        ganado = Op.objects.filter(etapa='ganado').aggregate(t=Sum('importe'))['t'] or 0   # Sum = suma de la columna
+        fidelizado = Op.objects.filter(etapa='fidelizado').aggregate(t=Sum('importe'))['t'] or 0   # Sum = suma de la columna
 
     # TODO-ALUMNO 9: añade aquí tu propia métrica (ej: tareas vencidas, oportunidades por etapa...)
     return render(request, 'core/inicio.html', {
-        'resumen': resumen, 'ultimas': ultimas, 'pendientes': pendientes, 'ganado': ganado})
+        'resumen': resumen, 'ultimas': ultimas, 'pendientes': pendientes, 'fidelizado': fidelizado})

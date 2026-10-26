@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='contacto',
-            name='cuota_mesnual',
+            name='cuota_mensual',
             field=models.BooleanField(default=False, help_text='Marca si el socio ha pagado la mensualidad de la asociación', verbose_name='Cuota mensual'),
         ),
         migrations.AddField(

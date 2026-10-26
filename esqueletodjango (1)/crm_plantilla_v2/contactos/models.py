@@ -25,9 +25,9 @@ class Contacto(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPOS, default='cliente')  # choices -> desplegable en formularios
     email = models.EmailField(blank=True)                            # blank=True -> se puede dejar vacío
     telefono = models.CharField(max_length=30, blank=True)           # Teléfono como texto (admite +34, espacios)
-    notas = models.TextField(blank=True)                             # Texto largo
+    notas = models.TextField(blank=True, max_length=500)             # Texto largo
     creado = models.DateTimeField(auto_now_add=True)                 # auto_now_add -> fecha de creación automática
-    cuota_mesnual = models.BooleanField(default=False, verbose_name="Cuota mensual", help_text="Marca si el socio ha pagado la mensualidad de la asociación")  # Booleano con etiqueta y ayuda
+    cuota_mensual = models.BooleanField(default=False, verbose_name="Cuota mensual", help_text="Marca si el socio ha pagado la mensualidad de la asociación")  # Booleano con etiqueta y ayuda
     sistema_preferido = models.CharField(max_length=100, blank=True, verbose_name="Sistema de juego preferido", help_text="P.ej. Warhammer 40k, Age of Sigmar, Star Wars X-Wing, etc.")  # Campo adicional para el sistema de juego preferido
     # TODO-ALUMNO 2: añade 2 campos propios de tu temática (ver catálogo abajo). Después:
     #   python manage.py makemigrations && python manage.py migrate

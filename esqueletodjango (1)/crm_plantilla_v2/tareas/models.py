@@ -42,6 +42,16 @@ class Tarea(models.Model):
 
     # TODO-ALUMNO 5: añade un campo llamado prioridad con opciones alta, media y baja.
     # Puedes usar choices para limitar los valores permitidos.
+    
+    prioridad = models.CharField(
+        max_length=10,
+        choices=[
+            ('alta', 'Alta'),
+            ('media', 'Media'),
+            ('baja', 'Baja')
+        ],
+        default='media',
+    )
 
     # Configuración adicional del modelo.
     class Meta:

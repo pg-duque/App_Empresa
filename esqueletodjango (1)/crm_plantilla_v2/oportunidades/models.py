@@ -18,9 +18,10 @@ class Oportunidad(models.Model):
     # el segundo es el texto que se muestra a las personas.
     ETAPAS = [
         ('nuevo', 'Nuevo'),
-        ('negociacion', 'En negociación'),
-        ('ganado', 'Ganado'),
-        ('perdido', 'Perdido'),
+        ('contactado', 'Contactado'),
+        ('en_proceso', 'En proceso'),
+        ('fidelizado', 'Fidelizado'),
+        ('perdido', 'Perdido')
         # TODO-ALUMNO 3: cambia o añade etapas según el tema de tu proyecto.
         # Por ejemplo: ('fichaje', 'Fichaje').
     ]
