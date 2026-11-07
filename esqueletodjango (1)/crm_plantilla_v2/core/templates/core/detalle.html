@@ -2,6 +2,8 @@
 {% block content %}
 <h1>{{ objeto }}</h1>
 <table>{% for etiqueta, valor in campos %}<tr><th>{{ etiqueta }}</th><td>{{ valor }}</td></tr>{% endfor %}</table>
+{# Punto de extensión para que la ficha de oportunidad inserte su formulario de ganar. #}
+{% block acciones_extra %}{% endblock %}
 <p>
  <a href="{% url ns|add:':editar' objeto.pk %}">Editar</a> ·
  <a href="{% url ns|add:':borrar' objeto.pk %}">Borrar</a> ·

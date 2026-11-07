@@ -9,29 +9,33 @@ from django.db import models
 
 
 class Contacto(models.Model):
-    # choices: lista de pares (valor_guardado_en_BD, texto_visible). Cámbialas por las de tu temática.
+    # TODO-ALUMNO 1 completado: tipos adaptados a la comunidad de Modelmakers.
+    # Cada pareja contiene el valor guardado en la base de datos y su etiqueta visible.
     TIPOS = [
-        ('socio', 'Socio'),
-        ('jugador', 'Jugador Habitual'),
-        ('modelista','Pintor / Modelista'),
-        ('proveedor', 'Proveedor / Marca'),
-        ('cliente', 'Cliente casual'),
-        ('mesa', "Mesa de juego"),
-        ('otro','Otro')
-        # TODO-ALUMNO 1: añade/renombra tipos (ej: 'socio', 'jugador', 'paciente', 'alumno'...)
+        ('socio', 'Socio'),  # Miembro inscrito que puede pagar la cuota del club.
+        ('jugador', 'Jugador Habitual'),  # Persona que participa o reserva partidas.
+        ('modelista','Pintor / Modelista'),  # Contacto dedicado al montaje o pintura de miniaturas.
+        ('proveedor', 'Proveedor / Marca'),  # Empresa o marca que suministra material.
+        ('cliente', 'Cliente casual'),  # Comprador ocasional de la tienda.
+        ('mesa', "Mesa de juego"),  # Recurso del club registrado para organizar sus reservas.
+        ('otro','Otro')  # Alternativa para contactos que no encajan en los tipos anteriores.
     ]
 
     nombre = models.CharField(max_length=120)                        # Texto corto. max_length es OBLIGATORIO
     tipo = models.CharField(max_length=20, choices=TIPOS, default='cliente')  # choices -> desplegable en formularios
     email = models.EmailField(blank=True)                            # blank=True -> se puede dejar vacío
     telefono = models.CharField(max_length=30, blank=True)           # Teléfono como texto (admite +34, espacios)
+    # El formulario valida un máximo de 500 caracteres; blank permite dejar las notas vacías.
     notas = models.TextField(blank=True, max_length=500)             # Texto largo
     creado = models.DateTimeField(auto_now_add=True)                 # auto_now_add -> fecha de creación automática
+    # TODO-ALUMNO 2 completado: estado del pago mensual, no una cantidad de dinero.
+    # default=False inicia la cuota sin pagar; verbose_name y help_text explican la casilla.
     cuota_mensual = models.BooleanField(default=False, verbose_name="Cuota mensual", help_text="Marca si el socio ha pagado la mensualidad de la asociación")  # Booleano con etiqueta y ayuda
+    # Segundo campo propio: juego o actividad preferida, hasta 100 caracteres y opcional.
+    # La etiqueta y el texto de ayuda se reutilizan al generar los formularios.
     sistema_preferido = models.CharField(max_length=100, blank=True, verbose_name="Sistema de juego preferido", help_text="P.ej. Warhammer 40k, Age of Sigmar, Star Wars X-Wing, etc.")  # Campo adicional para el sistema de juego preferido
-    # TODO-ALUMNO 2: añade 2 campos propios de tu temática (ver catálogo abajo). Después:
-    #   python manage.py makemigrations && python manage.py migrate
-    #   y añádelos a forms.py (fields), admin.py (list_display) y lista.html (columnas).
+    # Ambos campos están integrados en forms.py, admin.py, lista.html y la ficha de contacto.
+    # Las migraciones 0002 y 0003 conservan estos cambios para crear una base desde cero.
 
     class Meta:
         ordering = ['nombre']              # Orden por defecto. '-campo' = descendente

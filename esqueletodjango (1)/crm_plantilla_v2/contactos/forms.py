@@ -9,6 +9,7 @@ class ContactoForm(forms.ModelForm):
     class Meta:
         model = Contacto
         # fields = lista de campos que aparecen. Alternativas: '__all__' (todos) o exclude = [...]
+        # TODO-ALUMNO 2: incluye la casilla de cuota pagada y el sistema preferido al crear/editar.
         fields = ['nombre', 'tipo', 'email', 'telefono', 'notas', 'cuota_mensual', 'sistema_preferido']
         widgets = {
             

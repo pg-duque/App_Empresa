@@ -15,12 +15,12 @@ from .models import Tarea
 @admin.register(Tarea)
 class TareaAdmin(admin.ModelAdmin):
 
-    # Elige qué columnas aparecen en la lista de tareas.
-    list_display = ('titulo', 'contacto', 'vence', 'hecha',)
+    # TODO-ALUMNO 5: muestra también la prioridad en la lista del administrador.
+    list_display = ('titulo', 'contacto', 'vence', 'hecha', 'prioridad')
 
     # Añade un filtro lateral para mostrar, por ejemplo,
     # solo las tareas hechas o solo las pendientes.
-    list_filter = ('hecha',)
+    list_filter = ('hecha', 'prioridad')  # TODO-ALUMNO 5: filtro por prioridad.
 
     # Añade una caja de búsqueda que busca en el campo titulo.
     # '^campo' busca valores que empiezan por el texto escrito.

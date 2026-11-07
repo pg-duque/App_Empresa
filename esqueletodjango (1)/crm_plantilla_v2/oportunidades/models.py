@@ -17,13 +17,12 @@ class Oportunidad(models.Model):
     # En cada pareja, el primer texto es el valor que se guarda en la base de datos;
     # el segundo es el texto que se muestra a las personas.
     ETAPAS = [
-        ('nuevo', 'Nuevo'),
-        ('contactado', 'Contactado'),
-        ('en_proceso', 'En proceso'),
-        ('fidelizado', 'Fidelizado'),
-        ('perdido', 'Perdido')
-        # TODO-ALUMNO 3: cambia o añade etapas según el tema de tu proyecto.
-        # Por ejemplo: ('fichaje', 'Fichaje').
+        ('nuevo', 'Nuevo'),  # Pedido o reserva que acaba de registrarse.
+        ('contactado', 'Contactado'),  # Ya se ha iniciado la comunicación con el contacto.
+        ('en_proceso', 'En proceso'),  # Se está preparando o negociando el pedido o la reserva.
+        ('fidelizado', 'Fidelizado'),  # Etapa de éxito: sustituye ganado y se suma en el panel.
+        ('perdido', 'Perdido')  # La oportunidad no llegó a completarse.
+        # TODO-ALUMNO 3 completado: cinco etapas para el seguimiento comercial del club.
     ]
 
     # Campo de texto para el título. No puede superar los 150 caracteres.

@@ -1,0 +1,32 @@
+MODELMAKERS CLUB CRM
+
+ARRANQUE
+Windows: ejecutar iniciar.bat desde esta carpeta.
+Linux/macOS: ejecutar bash iniciar.sh desde esta carpeta.
+Se requiere Python 3.10 o superior y conexión para instalar Django.
+Abrir http://127.0.0.1:8000/.
+Usuario de ejemplo: admin
+Contraseña de ejemplo: admin1234
+
+TODOs COMPLETADOS
+0: nombre, color, idioma, zona horaria y TEMATICA.md de cinco líneas.
+1: tipos de contacto adaptados al club de miniaturas y wargames.
+2: cuota_mensual y sistema_preferido en modelo, formulario, admin, listado y ficha.
+3: cinco etapas; fidelizado es la etapa de éxito y se suma en el panel.
+4: canal WhatsApp en interacciones.
+5: prioridad alta/media/baja integrada en tareas, formulario, admin y listado.
+6: columnas de los cuatro listados adaptadas.
+7: filtro por tipo en contactos y por etapa en oportunidades, combinables con búsqueda.
+8: botón Marcar como ganada en la ficha de oportunidad, solo POST y con CSRF.
+9: métrica de tareas pendientes vencidas en el panel.
+10: ocho contactos temáticos, oportunidades con etapas válidas, interacciones y tareas.
+
+NIVEL 3: DOS FUNCIONES ELEGIDAS
+- Paginación de contactos: diez por página, conservando búsqueda y tipo.
+- Exportación CSV: descarga todos los contactos que cumplen los filtros, con tildes.
+
+DATOS Y ENTREGA
+El comando cargar_ejemplo no sobrescribe ni duplica los contactos existentes.
+La migración 0003 de oportunidades adapta negociacion a en_proceso y ganado a fidelizado.
+No se incluye el módulo opcional del nivel 4.
+El ZIP de entrega excluye venv, db.sqlite3 y archivos temporales.

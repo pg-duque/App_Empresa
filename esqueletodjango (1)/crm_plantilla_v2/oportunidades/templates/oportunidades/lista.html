@@ -7,21 +7,37 @@
   o.campo muestra un campo | o.get_campo_display texto visible de un choices
   fecha|date:"d/m/Y" formatea fecha | texto|truncatechars:60 recorta | x|default:"—" valor por defecto
   url 'app:nombre' o.pk  genera la URL (nunca escribas rutas a mano)
-  TODO-ALUMNO 6: añade/quita columnas (th en cabecera y td en cada fila) según tus campos.
+  TODO-ALUMNO 6 completado: columnas adaptadas a los datos del club.
 {% endcomment %}
 <form method="get">
- <input name="q" value="{{ q }}" placeholder="Buscar...">
- <button>Buscar</button>
+ {# Asocia la etiqueta al buscador y conserva el título buscado mediante value. #}
+ <label for="q">Título</label>
+ <input id="q" name="q" value="{{ q }}" placeholder="Buscar...">
+ {# TODO-ALUMNO 7: obtiene las etapas del modelo y conserva la selección. #}
+ <label for="etapa">Etapa</label>
+ <select id="etapa" name="etapa">
+  {# Vacío significa todas; cada par de etapas contiene valor guardado y etiqueta visible. #}
+  <option value="">Todas las etapas</option>
+  {% for valor, etiqueta in etapas %}
+   {# selected mantiene la etapa escogida después de enviar el formulario. #}
+   <option value="{{ valor }}"{% if etapa == valor %} selected{% endif %}>{{ etiqueta }}</option>
+  {% endfor %}
+ </select>
+ {# Filtrar envía q y etapa juntos; Limpiar vuelve al listado sin parámetros. #}
+ <button type="submit">Filtrar</button>
+ <a href="{% url 'oportunidades:index' %}">Limpiar filtros</a>
  <a class="btn" href="{% url 'oportunidades:crear' %}">+ Nuevo</a>
 </form>
+{# TODO-ALUMNO 6: añade el cierre previsto; date formatea la fecha y default cubre el vacío. #}
 <table>
- <tr><th>Título</th><th>Contacto</th><th>Etapa</th><th>Importe</th><th>Acciones</th></tr>
+ <tr><th>Título</th><th>Contacto</th><th>Etapa</th><th>Importe</th><th>Cierre previsto</th><th>Acciones</th></tr>
  {% for o in objetos %}
- <tr><td>{{ o.titulo }}</td><td>{{ o.contacto }}</td><td>{{ o.get_etapa_display }}</td><td>{{ o.importe }} €</td>
+ <tr><td>{{ o.titulo }}</td><td>{{ o.contacto }}</td><td>{{ o.get_etapa_display }}</td><td>{{ o.importe }} €</td><td>{{ o.cierre_previsto|date:"d/m/Y"|default:"—" }}</td>
   <td><a href="{% url 'oportunidades:detalle' o.pk %}">Ver</a> ·
       <a href="{% url 'oportunidades:editar' o.pk %}">Editar</a> ·
       <a href="{% url 'oportunidades:borrar' o.pk %}">Borrar</a></td></tr>
- {% empty %}<tr><td colspan="5">No hay datos todavía.</td></tr>
+ {# La fila vacía abarca las seis columnas del listado ampliado. #}
+ {% empty %}<tr><td colspan="6">No hay oportunidades que coincidan con la búsqueda.</td></tr>
  {% endfor %}
 </table>
 {% endblock %}

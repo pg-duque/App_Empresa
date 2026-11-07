@@ -40,17 +40,17 @@ class Tarea(models.Model):
     # Las tareas nuevas empiezan como pendientes (hecha=False).
     hecha = models.BooleanField(default=False)
 
-    # TODO-ALUMNO 5: añade un campo llamado prioridad con opciones alta, media y baja.
-    # Puedes usar choices para limitar los valores permitidos.
+    # TODO-ALUMNO 5 completado: prioridad alta, media o baja para ordenar la atención a las tareas.
+    # CharField guarda el valor interno; choices genera el desplegable y sus etiquetas.
     
     prioridad = models.CharField(
-        max_length=10,
-        choices=[
-            ('alta', 'Alta'),
-            ('media', 'Media'),
-            ('baja', 'Baja')
+        max_length=10,  # Longitud máxima del texto guardado, suficiente para estas opciones.
+        choices=[  # Pares (valor en la base de datos, texto que ve el usuario).
+            ('alta', 'Alta'),  # Tarea urgente o con mayor importancia.
+            ('media', 'Media'),  # Atención habitual para las tareas del club.
+            ('baja', 'Baja')  # Puede atenderse después de las prioridades superiores.
         ],
-        default='media',
+        default='media',  # Valor inicial y valor asignado a las tareas que ya existían.
     )
 
     # Configuración adicional del modelo.

@@ -1,27 +1,51 @@
+{# Reutiliza el menú y los estilos comunes; content contiene este listado. #}
 {% extends 'core/base.html' %}
 {% block content %}
 <h1>Contactos</h1>
-{% comment %}
-  Plantilla del listado. Variables que envía la vista: objetos (lista) y q (texto buscado).
-  for o in objetos ... empty ... endfor : recorre la lista; 'empty' se muestra si no hay datos.
-  o.campo muestra un campo | o.get_campo_display texto visible de un choices
-  fecha|date:"d/m/Y" formatea fecha | texto|truncatechars:60 recorta | x|default:"—" valor por defecto
-  url 'app:nombre' o.pk  genera la URL (nunca escribas rutas a mano)
-  TODO-ALUMNO 6: añade/quita columnas (th en cabecera y td en cada fila) según tus campos.
-{% endcomment %}
+{# TODO-ALUMNO 7: búsqueda y tipo se envían juntos mediante GET. #}
 <form method="get">
- <input name="q" value="{{ q }}" placeholder="Buscar...">
- <button>Buscar</button>
+ {# for/id asocia la etiqueta al campo; value repone la búsqueda anterior. #}
+ <label for="q">Nombre</label>
+ <input id="q" name="q" value="{{ q }}" placeholder="Buscar...">
+ <label for="tipo">Tipo</label>
+ <select id="tipo" name="tipo">
+  {# El valor vacío desactiva el filtro; el bucle usa los choices enviados por la vista. #}
+  <option value="">Todos los tipos</option>
+  {% for valor, etiqueta in tipos %}
+   {# Guarda el valor interno, muestra su etiqueta y conserva selected tras filtrar. #}
+   <option value="{{ valor }}"{% if tipo == valor %} selected{% endif %}>{{ etiqueta }}</option>
+  {% endfor %}
+ </select>
+ {# Enviar combina nombre y tipo; el enlace sin parámetros restaura el listado. #}
+ <button type="submit">Filtrar</button>
+ <a href="{% url 'contactos:index' %}">Limpiar filtros</a>
  <a class="btn" href="{% url 'contactos:crear' %}">+ Nuevo</a>
 </form>
+{# Nivel 3: exporta toda la selección, aunque esté repartida en varias páginas. #}
+{# urlencode protege los caracteres de los filtros al introducirlos en la URL del CSV. #}
+<p><a href="{% url 'contactos:exportar_csv' %}?q={{ q|urlencode }}&amp;tipo={{ tipo|urlencode }}">Exportar contactos a CSV</a></p>
+{# TODO-ALUMNO 6: incluye los dos campos propios de la asociación. #}
 <table>
- <tr><th>Nombre</th><th>Tipo</th><th>Email</th><th>Teléfono</th><th>Acciones</th></tr>
+ <tr><th>Nombre</th><th>Tipo</th><th>Email</th><th>Teléfono</th><th>Cuota pagada</th><th>Sistema preferido</th><th>Acciones</th></tr>
+ {# objetos es la página actual; get_tipo_display convierte el tipo en su etiqueta. #}
  {% for o in objetos %}
  <tr><td>{{ o.nombre }}</td><td>{{ o.get_tipo_display }}</td><td>{{ o.email }}</td><td>{{ o.telefono }}</td>
+  {# yesno traduce el booleano y default muestra un guion si no hay sistema preferido. #}
+  <td>{{ o.cuota_mensual|yesno:"Sí,No" }}</td><td>{{ o.sistema_preferido|default:"—" }}</td>
   <td><a href="{% url 'contactos:detalle' o.pk %}">Ver</a> ·
       <a href="{% url 'contactos:editar' o.pk %}">Editar</a> ·
       <a href="{% url 'contactos:borrar' o.pk %}">Borrar</a></td></tr>
- {% empty %}<tr><td colspan="5">No hay datos todavía.</td></tr>
+ {# Si la consulta no tiene resultados, una celda ocupa las siete columnas. #}
+ {% empty %}<tr><td colspan="7">No hay contactos que coincidan con la búsqueda.</td></tr>
  {% endfor %}
 </table>
+{# Nivel 3: conserva los filtros al cambiar de página. #}
+<nav class="paginacion" aria-label="Páginas de contactos">
+ {# Solo ofrece Anterior cuando existe; mantiene búsqueda y tipo en la nueva URL. #}
+ {% if pagina.has_previous %}<a href="?page={{ pagina.previous_page_number }}&amp;q={{ q|urlencode }}&amp;tipo={{ tipo|urlencode }}">Anterior</a>{% endif %}
+ {# number es la página actual; num_pages y count pertenecen al paginador completo. #}
+ <span>Página {{ pagina.number }} de {{ pagina.paginator.num_pages }} · {{ pagina.paginator.count }} contactos</span>
+ {# Solo ofrece Siguiente si quedan resultados en otra página. #}
+ {% if pagina.has_next %}<a href="?page={{ pagina.next_page_number }}&amp;q={{ q|urlencode }}&amp;tipo={{ tipo|urlencode }}">Siguiente</a>{% endif %}
+</nav>
 {% endblock %}

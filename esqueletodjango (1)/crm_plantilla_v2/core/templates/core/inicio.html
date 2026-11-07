@@ -8,7 +8,11 @@
 {% endfor %}
 </div>
 {% if pendientes != None %}<p>Tareas pendientes: <strong>{{ pendientes }}</strong></p>{% endif %}
-{% if ganado != None %}<p>Importe de oportunidades ganadas: <strong>{{ ganado }} €</strong></p>{% endif %}
+{# TODO-ALUMNO 3 y 9: éxito equivale a fidelizado; añade la métrica propia. #}
+{# None oculta la métrica si no hay módulo; floatformat:2 muestra dos decimales del importe. #}
+{% if fidelizado != None %}<p>Importe de oportunidades ganadas (fidelizados): <strong>{{ fidelizado|floatformat:2 }} €</strong></p>{% endif %}
+{# Muestra también cero vencidas; la vista ya ha excluido las tareas terminadas. #}
+{% if vencidas != None %}<p>Tareas pendientes vencidas: <strong>{{ vencidas }}</strong></p>{% endif %}
 {% if ultimas %}<h2>Últimas interacciones</h2>
 <ul>{% for i in ultimas %}<li>{{ i.fecha|date:"d/m/Y H:i" }} · {{ i.contacto }} · {{ i.get_canal_display }}</li>{% endfor %}</ul>{% endif %}
 {% endblock %}

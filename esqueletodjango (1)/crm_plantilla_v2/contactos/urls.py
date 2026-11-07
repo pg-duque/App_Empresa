@@ -6,6 +6,8 @@ app_name = 'contactos'   # Espacio de nombres: en plantillas {% url 'contactos:i
 
 urlpatterns = [
     path('', views.index, name='index'),                          # /contactos/
+    # Nivel 3: exportación con los filtros del listado.
+    path('exportar/', views.exportar_csv, name='exportar_csv'),
     path('nuevo/', views.crear, name='crear'),                    # /contactos/nuevo/
     path('<int:pk>/', views.detalle, name='detalle'),             # /contactos/3/   (<int:pk> = número entero)
     path('<int:pk>/editar/', views.editar, name='editar'),

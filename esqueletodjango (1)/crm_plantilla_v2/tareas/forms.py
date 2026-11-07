@@ -22,7 +22,8 @@ class TareaForm(forms.ModelForm):
         # Indica qué campos del modelo aparecerán.
         # También podrías usar '__all__' para incluirlos todos,
         # o exclude = ['campo'] para dejar fuera alguno.
-        fields = ['titulo', 'contacto', 'vence', 'hecha']
+        # TODO-ALUMNO 5: permite escoger la prioridad al crear y editar.
+        fields = ['titulo', 'contacto', 'vence', 'hecha', 'prioridad']
 
         # Personaliza cómo se dibujan ciertos campos en el HTML.
         widgets = {

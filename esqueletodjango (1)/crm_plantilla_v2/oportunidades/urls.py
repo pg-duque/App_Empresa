@@ -30,6 +30,8 @@ urlpatterns = [
     path('<int:pk>/', views.detalle, name='detalle'),
 
     # /oportunidades/3/editar/ llama a views.editar con pk=3.
+    # TODO-ALUMNO 8: la vista ganar exige POST.
+    path('<int:pk>/ganar/', views.ganar, name='ganar'),
     path('<int:pk>/editar/', views.editar, name='editar'),
 
     # /oportunidades/3/borrar/ llama a views.borrar con pk=3.

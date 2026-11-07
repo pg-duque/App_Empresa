@@ -1,0 +1,7 @@
+# Entornos y datos locales: no forman parte de la entrega.
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+db.sqlite3
+*.sqlite3-journal

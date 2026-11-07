@@ -1,0 +1,13 @@
+{# Hereda los campos y enlaces de la ficha común; solo añade la acción propia de oportunidades. #}
+{% extends 'core/detalle.html' %}
+{% block acciones_extra %}
+{# TODO-ALUMNO 8: CSRF protege el cambio de etapa enviado por POST. #}
+{# Oculta el botón si ya está ganada; la vista también guarda siempre la misma etapa. #}
+{% if objeto.etapa != 'fidelizado' %}
+{# url genera la ruta con el identificador; POST solicita un cambio y no una consulta. #}
+<form method="post" action="{% url 'oportunidades:ganar' objeto.pk %}">
+ {# El token permite al servidor validar que el formulario procede de esta sesión. #}
+ {% csrf_token %}<button type="submit">Marcar como ganada</button>
+</form>
+{% else %}<p>Oportunidad ganada · Contacto fidelizado.</p>{% endif %}
+{% endblock %}

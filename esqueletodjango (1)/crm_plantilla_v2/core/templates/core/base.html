@@ -3,13 +3,19 @@
 <title>{% block title %}{{ NOMBRE_CRM }}{% endblock %}</title>
 <style>
  body{font-family:system-ui,sans-serif;margin:0;background:#f5f6f8}
- nav{background:{{ COLOR }};padding:12px 20px;display:flex;gap:16px;align-items:center}
- nav a,nav button{color:#fff;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer}
- nav .marca{font-weight:bold;font-size:1.2em;margin-right:auto}
+ /* body > nav limita el estilo marrón al menú principal, sin afectar al paginador. */
+ body > nav{background:{{ COLOR }};padding:12px 20px;display:flex;gap:16px;align-items:center}
+ body > nav a,body > nav button{color:#fff;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer}
+ body > nav .marca{font-weight:bold;font-size:1.2em;margin-right:auto}
  main{max-width:960px;margin:24px auto;background:#fff;padding:24px;border-radius:8px}
  table{border-collapse:collapse;width:100%} td,th{border-bottom:1px solid #ddd;padding:8px;text-align:left}
  input,select,textarea{padding:6px;margin:2px 0} main button,.btn{padding:6px 12px;cursor:pointer}
  form p{margin:10px 0} .aviso{background:#fff8e1;border-left:4px solid #f5a623;padding:10px}
+ /* Listados ampliados: permite desplazamiento en pantallas pequeñas. */
+ /* overflow-x permite leer tablas anchas; flex-wrap reparte el menú en varias líneas. */
+ main{overflow-x:auto} body > nav{flex-wrap:wrap}
+ /* Alinea los enlaces del paginador con separación y margen respecto a la tabla. */
+ .paginacion{display:flex;gap:16px;align-items:center;margin-top:16px}
 </style></head>
 <body>
 <nav>

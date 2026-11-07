@@ -9,10 +9,10 @@ SECRET_KEY = 'clave-solo-para-desarrollo-cambiar-en-produccion'  # Nunca subir u
 DEBUG = True                 # True = muestra errores detallados (solo desarrollo). False en producción
 ALLOWED_HOSTS = []           # Con DEBUG=False hay que listar dominios, ej: ['midominio.com']
 
-# >>> ALUMNO: nombre de tu CRM (aparece en la barra superior)
-NOMBRE_CRM = 'Modelmakers Club CRM'
+# TODO-ALUMNO 0 completado: nombre de la tienda-asociación visible en la barra superior.
+NOMBRE_CRM = 'Modelmakers Club CRM'  # Lo recibe la plantilla mediante el procesador de contexto.
 # >>> ALUMNO: color principal en formato CSS. Valores válidos: '#0b6623', 'crimson', 'rgb(10,20,30)'...
-COLOR_PRINCIPAL = "#502c2c"
+COLOR_PRINCIPAL = "#502c2c"  # Color granate en hexadecimal para el menú del club.
 
 # >>> ALUMNO: MÓDULOS ACTIVOS. Cada nombre es una carpeta (app) del proyecto.
 #   - Para DESACTIVAR un módulo: bórralo o coméntalo de la lista (y borra su bloque en contactos/detalle.html).
@@ -66,9 +66,9 @@ WSGI_APPLICATION = 'crm_project.wsgi.application'
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
 
 # >>> ALUMNO (opcional): idioma. Ej: 'es' (español), 'en-us', 'ca', 'fr'
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es'  # Traduce los textos de Django y adapta los formatos al español.
 # Zona horaria. Ej: 'Europe/Madrid', 'UTC', 'America/Mexico_City'
-TIME_ZONE = 'Europe/Madrid'
+TIME_ZONE = 'Europe/Madrid'  # Referencia local para mostrar horas y calcular las tareas vencidas.
 USE_I18N = True
 USE_TZ = True          # True = guarda fechas en UTC (recomendado)
 

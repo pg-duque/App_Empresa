@@ -7,6 +7,7 @@ CRUD significa crear, leer, actualizar y borrar.
 
 # Permite mostrar avisos temporales, como «Guardado correctamente».
 from django.contrib import messages
+from django.views.decorators.http import require_POST  # Rechaza GET en acciones que guardan cambios.
 
 # Hace que solo puedan entrar usuarios que hayan iniciado sesión.
 from django.contrib.auth.decorators import login_required
@@ -40,15 +41,22 @@ def index(request):
         # __icontains es un filtro especial de Django para ese tipo de búsqueda.
         objetos = objetos.filter(titulo__icontains=q)
 
-    # TODO-ALUMNO 7: añade un filtro por una etapa u otro campo con opciones.
-    # Por ejemplo, puedes leer un parámetro con request.GET.get('etapa') y filtrar objetos.
+    # TODO-ALUMNO 7: lee y valida la etapa elegida en el desplegable.
+    etapa = request.GET.get('etapa', '').strip()
+    # dict convierte los pares de choices en un diccionario de valores permitidos.
+    if etapa not in dict(Oportunidad.ETAPAS):
+        etapa = ''  # Descarta valores de URL que no existen en el modelo.
+    # Solo limita la consulta si se ha elegido una etapa válida.
+    if etapa:
+        objetos = objetos.filter(etapa=etapa)  # Se combina con la búsqueda por título.
 
     # Carga la plantilla lista.html y le entrega los datos que necesita:
     # objetos = oportunidades encontradas; q = texto buscado.
+    # etapa conserva la selección; etapas proporciona las opciones del desplegable.
     return render(
         request,
         'oportunidades/lista.html',
-        {'objetos': objetos, 'q': q}
+        {'objetos': objetos, 'q': q, 'etapa': etapa, 'etapas': Oportunidad.ETAPAS}
     )
 
 
@@ -66,7 +74,7 @@ def detalle(request, pk):
     # ns = nombre del espacio de nombres de sus direcciones web.
     return render(
         request,
-        'core/detalle.html',
+        'oportunidades/detalle.html',
         {
             'objeto': objeto,
             'campos': campos_de(objeto),
@@ -186,3 +194,20 @@ def borrar(request, pk):
             'volver': 'oportunidades:index'
         }
     )
+
+
+# TODO-ALUMNO 8: solo un usuario autenticado y una petición POST pueden ganar.
+@login_required
+# require_POST responde con 405 si se intenta guardar visitando una URL con GET.
+@require_POST
+def ganar(request, pk):
+    """Marca como ganada usando la etapa de éxito de Modelmakers: fidelizado."""
+    # Busca por identificador; devuelve 404 si la oportunidad ya no existe.
+    objeto = get_object_or_404(Oportunidad, pk=pk)
+    # Fidelizado es el valor guardado que representa una oportunidad ganada en este CRM.
+    objeto.etapa = 'fidelizado'
+    objeto.save(update_fields=['etapa'])  # Guarda únicamente la etapa.
+    # El aviso se mostrará en la ficha después de la redirección.
+    messages.success(request, 'Oportunidad ganada: contacto fidelizado.')
+    # Vuelve a la ficha con GET para evitar reenviar el POST al recargar.
+    return redirect('oportunidades:detalle', pk=objeto.pk)
