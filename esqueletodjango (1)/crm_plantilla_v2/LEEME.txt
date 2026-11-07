@@ -28,5 +28,14 @@ NIVEL 3: DOS FUNCIONES ELEGIDAS
 DATOS Y ENTREGA
 El comando cargar_ejemplo no sobrescribe ni duplica los contactos existentes.
 La migración 0003 de oportunidades adapta negociacion a en_proceso y ganado a fidelizado.
-No se incluye el módulo opcional del nivel 4.
+NIVEL 4 COMPLETADO: MÓDULO PROPIO EVENTOS
+- Acceso desde el menú Eventos y desde la tarjeta del panel.
+- Torneos, talleres de pintura, partidas organizadas y presentaciones.
+- Listado con búsqueda por título; ficha, crear, editar y borrar con confirmación.
+- Fecha, lugar, aforo mínimo de una plaza, descripción y organizador opcional.
+- Los eventos del organizador aparecen también en su ficha de contacto.
+- Si se elimina el organizador se conserva el evento sin contacto asignado.
+- Incluye migración, administración y cuatro eventos de ejemplo sin duplicados.
+- Para ejecutar las pruebas: python manage.py test.
+- Todo el código añadido sigue el estilo comentado de la plantilla.
 El ZIP de entrega excluye venv, db.sqlite3 y archivos temporales.

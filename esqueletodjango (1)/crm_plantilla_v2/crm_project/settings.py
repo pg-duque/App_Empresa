@@ -24,6 +24,7 @@ MODULOS_CRM = [
     'oportunidades',
     'interacciones',
     'tareas',
+    'eventos',  # Nivel 4: módulo propio; se registra en las apps, las rutas y el menú.
 ]
 
 INSTALLED_APPS = [

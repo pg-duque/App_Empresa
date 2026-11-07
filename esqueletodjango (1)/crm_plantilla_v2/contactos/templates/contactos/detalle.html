@@ -22,4 +22,10 @@
 <ul>{% for t in objeto.tareas.all %}
  <li>{{ t.titulo }} · vence {{ t.vence|date:"d/m/Y" }} {% if t.hecha %}(hecha){% endif %}</li>
 {% empty %}<li>Sin tareas.</li>{% endfor %}</ul>
+{# Nivel 4: related_name permite consultar los eventos de este organizador. #}
+{# Si se desactiva eventos, eliminar este bloque como indica el enunciado. #}
+<h2>Eventos <a class="btn" href="{% url 'eventos:crear' %}?contacto={{ objeto.pk }}">+ Nuevo</a></h2>
+<ul>{% for e in objeto.eventos.all %}
+ <li><a href="{% url 'eventos:detalle' e.pk %}">{{ e.titulo }}</a> · {{ e.fecha|date:"d/m/Y" }} · {{ e.get_tipo_display }}</li>
+{% empty %}<li>Sin eventos organizados.</li>{% endfor %}</ul>
 {% endblock %}

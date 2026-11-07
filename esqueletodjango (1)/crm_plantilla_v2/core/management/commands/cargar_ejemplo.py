@@ -16,6 +16,24 @@ class Command(BaseCommand):
         if not User.objects.filter(username='admin').exists():
             User.objects.create_superuser('admin', 'admin@example.com', 'admin1234')
             self.stdout.write('Usuario creado: admin / admin1234')
+        # Nivel 4: prepara actividades del club incluso si los contactos ya estaban cargados.
+        try:
+            Evento = apps.get_model('eventos', 'Evento')  # No importa el modelo si el módulo está desactivado.
+            # Cada tupla contiene título, tipo, días hasta el evento, lugar y aforo de ejemplo.
+            ejemplos = [
+                ('Torneo de Warhammer 40k', 'torneo', 14, 'Sala de juego', 16),
+                ('Taller de pintura de miniaturas', 'taller', 7, 'Mesa de pintura', 12),
+                ('Partida de iniciación a BattleTech', 'partida', 3, 'Mesa de juego 2', 6),
+                ('Presentación de novedades de modelismo', 'presentacion', 21, 'Tienda', 20),
+            ]
+            # Usa el título como referencia para que repetir el comando no duplique actividades.
+            for titulo, tipo, dias, lugar, aforo in ejemplos:
+                Evento.objects.get_or_create(titulo=titulo, defaults={
+                    'tipo': tipo, 'fecha': date.today() + timedelta(days=dias),
+                    'lugar': lugar, 'aforo': aforo,  # Solo asigna estos datos si el evento es nuevo.
+                })
+        except LookupError:
+            pass  # Respeta la desactivación del módulo y continúa con los ejemplos restantes.
         try:
             Contacto = apps.get_model('contactos', 'Contacto')
         except LookupError:

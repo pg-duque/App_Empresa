@@ -1,0 +1,25 @@
+{# Nivel 4: reutiliza el menú y los estilos comunes del CRM. #}
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>Eventos del club</h1>
+{# GET busca por título y q conserva el texto después del envío. #}
+<form method="get">
+ <label for="q">Título</label>
+ <input id="q" name="q" value="{{ q }}" placeholder="Buscar evento...">
+ <button type="submit">Buscar</button>
+ <a href="{% url 'eventos:index' %}">Limpiar búsqueda</a>
+ <a class="btn" href="{% url 'eventos:crear' %}">+ Nuevo evento</a>
+</form>
+{# Cada fila corresponde a un evento; get_tipo_display muestra la etiqueta del tipo. #}
+<table>
+ <tr><th>Título</th><th>Tipo</th><th>Fecha</th><th>Lugar</th><th>Aforo</th><th>Organizador</th><th>Acciones</th></tr>
+ {% for o in objetos %}
+ {# date adapta la fecha; default muestra un guion si no hay organizador. #}
+ <tr><td>{{ o.titulo }}</td><td>{{ o.get_tipo_display }}</td><td>{{ o.fecha|date:"d/m/Y" }}</td><td>{{ o.lugar }}</td><td>{{ o.aforo }}</td><td>{{ o.contacto|default:"—" }}</td>
+  {# Las rutas usan el identificador del evento para ver, editar o pedir confirmación de borrado. #}
+  <td><a href="{% url 'eventos:detalle' o.pk %}">Ver</a> · <a href="{% url 'eventos:editar' o.pk %}">Editar</a> · <a href="{% url 'eventos:borrar' o.pk %}">Borrar</a></td></tr>
+ {# Sin coincidencias, la celda ocupa las siete columnas. #}
+ {% empty %}<tr><td colspan="7">No hay eventos que coincidan con la búsqueda.</td></tr>
+ {% endfor %}
+</table>
+{% endblock %}

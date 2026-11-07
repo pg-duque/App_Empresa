@@ -18,7 +18,9 @@ def inicio(request):
     for app, modelo, etiqueta in [('contactos', 'Contacto', 'Contactos'),
                                 ('oportunidades', 'Oportunidad', 'Oportunidades'),
                                 ('interacciones', 'Interaccion', 'Interacciones'),
-                                ('tareas', 'Tarea', 'Tareas')]:
+                                ('tareas', 'Tarea', 'Tareas'),
+                                # Nivel 4: añade una tarjeta del nuevo módulo al panel.
+                                ('eventos', 'Evento', 'Eventos')]:
         M = _modelo(app, modelo)
         if M:
             resumen.append({'etiqueta': etiqueta, 'n': M.objects.count(), 'url': f'{app}:index'})
